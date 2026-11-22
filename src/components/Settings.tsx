@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { buildIcs } from '../lib/reminder';
 import { download, parseBackup } from '../lib/storage';
 import type { AppState, Settings as S } from '../lib/types';
@@ -9,6 +9,8 @@ export function Settings({ state, onSettings, onImport }: {
   onImport: (s: AppState) => void;
 }) {
   const file = useRef<HTMLInputElement>(null);
+  const [pending, setPending] = useState<AppState | null>(null);
+  const [importError, setImportError] = useState('');
   const s = state.settings;
   const supported = typeof Notification !== 'undefined';
 
@@ -50,12 +52,20 @@ export function Settings({ state, onSettings, onImport }: {
           const f = e.target.files?.[0];
           if (!f) return;
           try {
-            const next = parseBackup(await f.text());
-            if (confirm('Replace all current data with this backup?')) onImport(next);
-          } catch (err) { alert((err as Error).message); }
+            setImportError('');
+            setPending(parseBackup(await f.text()));
+          } catch (err) { setImportError((err as Error).message); }
           e.target.value = '';
         }} />
       </div>
+      {importError && <p className="status error">{importError}</p>}
+      {pending && (
+        <div className="row status info">
+          <span>Replace all current data with this backup ({pending.books.length} books)?</span>
+          <button className="danger" onClick={() => { onImport(pending); setPending(null); }}>Replace</button>
+          <button onClick={() => setPending(null)}>Cancel</button>
+        </div>
+      )}
     </div>
   );
 }

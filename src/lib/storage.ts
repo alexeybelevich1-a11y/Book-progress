@@ -1,3 +1,4 @@
+import { demoState } from './demo';
 import { emptyState } from './progress';
 import type { AppState } from './types';
 
@@ -13,7 +14,7 @@ export function loadState(): AppState {
   } catch {
     /* storage unavailable */
   }
-  return emptyState();
+  return import.meta.env.VITE_DEMO ? demoState() : emptyState();
 }
 
 export function saveState(s: AppState) {

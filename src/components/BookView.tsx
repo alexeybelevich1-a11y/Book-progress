@@ -16,6 +16,7 @@ export function BookView(props: {
 }) {
   const { book } = props;
   const [editing, setEditing] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
   const [filter, setFilter] = useState<ChapterStatus | 'all'>('all');
   const p = bookProgress(book);
   const recent = props.log.filter((e) => e.bookId === book.id).slice(-10).reverse();
@@ -62,9 +63,15 @@ export function BookView(props: {
                 </li>
               ))}
             </ol>
-            <button className="danger" onClick={() => confirm(`Delete "${book.title}" and its log?`) && props.onDelete()}>
-              Delete book
-            </button>
+            {confirmDelete ? (
+              <div className="row">
+                <span>Delete this book and its reading log?</span>
+                <button className="danger" onClick={props.onDelete}>Yes, delete</button>
+                <button onClick={() => setConfirmDelete(false)}>Keep</button>
+              </div>
+            ) : (
+              <button className="danger" onClick={() => setConfirmDelete(true)}>Delete book</button>
+            )}
           </div>
         ) : (
           <div className="grid">
