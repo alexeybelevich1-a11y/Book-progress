@@ -37,14 +37,14 @@ export function Settings({ state, onSettings, onImport }: {
         In-app reminders only fire while the app is open. For a reminder on your phone that always works,
         add the daily event to your calendar:
       </p>
-      <button onClick={() => download('medread-daily-reminder.ics', buildIcs(s.reminderTime), 'text/calendar')}>
+      <button onClick={() => download('book-progress-daily-reminder.ics', buildIcs(s.reminderTime), 'text/calendar')}>
         📅 Add daily reminder to calendar
       </button>
 
       <h2>Backup</h2>
       <p className="hint">Your data is stored only in this browser. Export a backup to move it to another device.</p>
       <div className="row">
-        <button onClick={() => download(`medread-backup-${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify(state, null, 2), 'application/json')}>
+        <button onClick={() => download(`book-progress-backup-${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify(state, null, 2), 'application/json')}>
           Export
         </button>
         <button onClick={() => file.current?.click()}>Import</button>

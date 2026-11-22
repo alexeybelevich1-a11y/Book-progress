@@ -1,6 +1,6 @@
 {
-  "name": "MedRead Tracker",
-  "short_name": "MedRead",
+  "name": "Book Progress",
+  "short_name": "Book Progress",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#f8fafc",

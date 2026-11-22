@@ -2,11 +2,12 @@ import { demoState } from './demo';
 import { emptyState } from './progress';
 import type { AppState } from './types';
 
-const KEY = 'medread:v1';
+const KEY = 'book-progress:v1';
+const LEGACY_KEY = 'medread:v1';
 
 export function loadState(): AppState {
   try {
-    const raw = localStorage.getItem(KEY);
+    const raw = localStorage.getItem(KEY) ?? localStorage.getItem(LEGACY_KEY);
     if (raw) {
       const s = JSON.parse(raw);
       if (s?.version === 1) return { ...emptyState(), ...s };
@@ -27,7 +28,7 @@ export function saveState(s: AppState) {
 
 export function parseBackup(text: string): AppState {
   const s = JSON.parse(text);
-  if (s?.version !== 1 || !Array.isArray(s.books)) throw new Error('Not a MedRead backup file.');
+  if (s?.version !== 1 || !Array.isArray(s.books)) throw new Error('Not a Book Progress backup file.');
   return { ...emptyState(), ...s };
 }
 

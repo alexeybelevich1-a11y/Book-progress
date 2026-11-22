@@ -24,7 +24,7 @@ export default function App() {
       setState((s) => {
         if (!shouldRemind(s.settings, new Date(), today, s.lastReminderDate, readToday(s, today))) return s;
         if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
-          new Notification('MedRead Tracker', { body: "You haven't logged any reading today. One chapter?" });
+          new Notification('Book Progress', { body: "You haven't logged any reading today. One chapter?" });
         }
         setBanner(true);
         return { ...s, lastReminderDate: today };
@@ -44,7 +44,7 @@ export default function App() {
   return (
     <main>
       <header>
-        <h1 onClick={() => setView({ name: 'home' })}>📖 MedRead</h1>
+        <h1 onClick={() => setView({ name: 'home' })}>📖 Book Progress</h1>
         <nav>
           <button className="link" onClick={() => setView({ name: 'settings' })}>⚙ Settings</button>
         </nav>

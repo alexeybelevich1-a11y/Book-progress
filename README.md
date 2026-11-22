@@ -1,4 +1,4 @@
-# MedRead Tracker
+# Book Progress
 
 A reading-progress tracker for **medical textbooks**, which you rarely read cover to cover or in order.
 
